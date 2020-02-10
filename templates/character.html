@@ -14,10 +14,8 @@
     <body>
         {% if login_flag %}
         <table>
-            <tr>data {{ errormessage }}</tr>
             <form action="/" method="POST"><table>
                 {% csrf_token %}
-                <tr><td>account</td><td><input type="text" name="account" id="account" value="{{ char.account }}"></td><tr></tr>
                 <tr><td>Name</td><td><input type="text" name="Name" id="Name" value="{{ char.Name }}"></td><tr>
                 <tr><td>Sex</td><td><input type="text" name="Sex" id="Sex" value="{{ char.Sex }}"></td><tr>
                 <tr><td>Job</td><td><input type="text" name="Job" id="Job" value="{{ char.Job }}"></td><tr>

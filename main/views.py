@@ -1,16 +1,22 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from .models import Character
+from django.http import HttpResponse,JsonResponse
+from .models import Character,Account
 from random import randint
-# Create your views here.
-def show_character(request):
-    #try:
 
-    char = Character.objects.get(account=request.POST['account'])
-    login_flag = char.password == request.POST['pass']
-    #char = Character.objects.get(Name="空Q布蘭度")
-    #except:
-    #    errormessage = "ERROR"
+
+# Create your views here.
+def show_characters(request):
+    user = Account.objects.get(username=request.POST['username'])
+    login_flag = user.password == request.POST['password']
+    if login_flag:
+        chars = Character.objects.filter(username=request.POST['username']).all()
+        print(chars)
+    return render(request,"user_characters.html",locals())
+def show_character(request):
+    char = Character.objects.get(id=request.POST['id'])
+    login_flag = char.username == request.POST['username']
+    if login_flag:
+        char = Character.objects.get(id=request.POST['id'])
     return render(request,"character.html",locals())
 
 def menu(request):
@@ -22,9 +28,11 @@ def menu(request):
     elif request.POST['submit'] == 'update':
         update_character(request)
         return redirect('/')
+    elif request.POST['submit'] == 'regist':
+        user_regist(request)
     return render(request,"menu.html",locals())
 def update_character(request):
-    char = Character.objects.filter(account=request.POST["account"]).first()
+    char = Character.objects.filter(id=request.POST["id"]).first()
     char.Name=request.POST["Name"]
     char.Sex=request.POST["Sex"]
     char.Job=request.POST["Job"]
@@ -111,10 +119,7 @@ def update_character(request):
     char.Encounters_with_Strange_Entities=request.POST["Encounters_with_Strange_Entities"]
     char.save()
 def create_character(request):
-    if len(Character.objects.filter(account=request.POST["account"]))>0:
-        return
-    Character.objects.create(account=request.POST["account"],\
-                         password=request.POST["password"],\
+    Character.objects.create(username=request.POST["username"],\
                          Name=request.POST["Name"],\
                          Sex=request.POST["Sex"],\
                          Job=request.POST["Job"],\
@@ -201,20 +206,26 @@ def create_character(request):
                          Encounters_with_Strange_Entities=request.POST["Encounters_with_Strange_Entities"])
 
 def show_create_page(request):
+    username = request.POST['username']
+    password = request.POST['password']
     return render(request,'create_char.html',locals())
-    
-def init_create(request):
-    STR = randint(1,6)+randint(1,6)+randint(1,6)
-    CON = randint(1,6)+randint(1,6)+randint(1,6)
-    SIZ = randint(1,6)+randint(1,6)+6
-    DEX = randint(1,6)+randint(1,6)+randint(1,6)
-    APP = randint(1,6)+randint(1,6)+randint(1,6)
-    EDU = randint(1,6)+randint(1,6)+6
-    INT = randint(1,6)+randint(1,6)+6
-    POW = randint(1,6)+randint(1,6)+randint(1,6)
-    HP_max = (CON+SIZ)/10
-    HP = HP_max
-    MP_max = POW/10
-    MP = MP_max
-    SAN = POW
-    LUCK = randint(1,6)+randint(1,6)+randint(1,6)
+
+def show_regist_page(request):
+    return render(request,"regist.html",locals())
+
+def user_regist(request):
+    Account.objects.create(username=request.POST['username'],\
+                           password=request.POST['password'],\
+                           email=request.POST['email'])
+    return
+
+def validate_username(request):
+    print('test')
+    username = request.GET.get('username',None)
+    data = {
+        'is_taken': Account.objects.filter(username=username).exists()
+    }
+    print(data['is_taken'])
+    if data['is_taken']:
+        data['error_message'] = 'A user with this username already exists.'
+    return JsonResponse(data)

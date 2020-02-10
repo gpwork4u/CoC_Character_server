@@ -12,11 +12,9 @@
   </head>
   <body>
     <body>
-        <form action="../" method="POST"><table>
+        <form action="/" method="POST"><table>
 			{% csrf_token %}
 			<tr><td><input type="button" value="生成數值" onclick=gen_random()></td><td><input type="button" value="年齡補正" onclick=age_fix()></td></tr>
-			<tr><td>account</td><td><input type="text" name="account" id="account" value="test"></td><tr>
-			<tr><td>password</td><td><input type="text" name="password" id="password" value="test"></td><tr>
 			<tr><td>Name</td><td><input type="text" name="Name" id="Name" value="test"></td><tr>
 			<tr><td>Sex</td><td><input type="text" name="Sex" id="Sex" value="test"></td><tr>
 			<tr><td>Job</td><td><input type="text" name="Job" id="Job" value="test"></td><tr>
@@ -101,8 +99,10 @@
 			<tr><td>Phobias_Manias</td><td><input type="text" name="Phobias_Manias" id="Phobias_Manias" value="test"></td><tr>
 			<tr><td>Arcane_Tome_Spell_Artifact</td><td><input type="text" name="Arcane_Tome_Spell_Artifact" id="Arcane_Tome_Spell_Artifact" value="test"></td><tr>
 			<tr><td>Encounters_with_Strange_Entities</td><td><input type="text" name="Encounters_with_Strange_Entities" id="Encounters_with_Strange_Entities" value="test"></td><tr>
-			<tr><td><input type="submit" name="create" id="create" value="create"></td></tr>
+			<tr><td><input type="submit" name="submit" id="submit" value="create"></td></tr>
 		</table>
+		<input type="hidden" id="username" name="username" value="{{ username }}">
+		<input type="hidden" id="password" name="password" value="{{ password }}">
 		</form>
 	<script>
 		function gen_random(){

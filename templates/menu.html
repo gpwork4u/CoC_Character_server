@@ -12,17 +12,17 @@
   </head>
   <body>
     <body>
-        <form action="character/" method="POST">
+        <form action="user_characters/" method="POST">
             {% csrf_token %}
             <table>
                 <tr>
-                    <td>account</td>
+                    <td>username</td>
                     <td>
-                        <input type="text" id="account" name="account">
+                        <input type="text" id="username" name="username">
                     </td>
                 </tr>
-                <tr><td>password</td><td><input type="text" id="pass" name="pass"></td></tr>
-                <tr><td><input type="submit" name="button" id="button" value="送出"></td><td><a href="create_character/">create</a></td></tr>
+                <tr><td>password</td><td><input type="text" id="password" name="password"></td></tr>
+                <tr><td><input type="submit" name="login" id="login" value="login"></td><td><input type="button" onclick="location.href='regist/'" value="regist"></td></tr>
             </table>
         </form>
 

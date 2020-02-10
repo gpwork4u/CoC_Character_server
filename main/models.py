@@ -1,9 +1,14 @@
 from django.db import models
 #default=10
 # Create your models here.
+class Account(models.Model):
+    username = models.CharField(max_length=10,default=10,primary_key=True)
+    password = models.CharField(max_length=200,default=10)
+    email = models.EmailField(default="test@test.tw")
+    def __str__(self):
+        return self.username
 class Character(models.Model):
-    account = models.CharField(max_length=10,default=10)
-    password = models.CharField(max_length=10,default=10)
+    username = models.CharField(max_length=10,default=10)
     Name = models.CharField(max_length=100,default=10) 
     Sex = models.CharField(max_length=10,default=10)
     Job = models.CharField(max_length=10,default=10)
@@ -88,5 +93,5 @@ class Character(models.Model):
     Phobias_Manias = models.CharField(max_length=100,default=10)
     Arcane_Tome_Spell_Artifact = models.CharField(max_length=100,default=10)
     Encounters_with_Strange_Entities = models.CharField(max_length=100,default=10) 
-    def __str__(self,default=10):
+    def __str__(self):
         return self.Name
