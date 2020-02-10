@@ -14,6 +14,7 @@
     <body>
         <form action="../" method="POST"><table>
 			{% csrf_token %}
+			<tr><td><input type="button" value="生成數值" onclick=gen_random()></td><td><input type="button" value="年齡補正" onclick=age_fix()></td></tr>
 			<tr><td>account</td><td><input type="text" name="account" id="account" value="test"></td><tr>
 			<tr><td>password</td><td><input type="text" name="password" id="password" value="test"></td><tr>
 			<tr><td>Name</td><td><input type="text" name="Name" id="Name" value="test"></td><tr>
@@ -100,10 +101,49 @@
 			<tr><td>Phobias_Manias</td><td><input type="text" name="Phobias_Manias" id="Phobias_Manias" value="test"></td><tr>
 			<tr><td>Arcane_Tome_Spell_Artifact</td><td><input type="text" name="Arcane_Tome_Spell_Artifact" id="Arcane_Tome_Spell_Artifact" value="test"></td><tr>
 			<tr><td>Encounters_with_Strange_Entities</td><td><input type="text" name="Encounters_with_Strange_Entities" id="Encounters_with_Strange_Entities" value="test"></td><tr>
-		<tr><input type="submit" name="submit" id="create" value="create"></tr>
+			<tr><td><input type="submit" name="create" id="create" value="create"></td></tr>
 		</table>
 		</form>
-
+	<script>
+		function gen_random(){
+			STR = document.getElementById("STR");
+			CON = document.getElementById("CON");
+			SIZ = document.getElementById("SIZ");
+			DEX = document.getElementById("DEX");
+			APP = document.getElementById("APP");
+			INT = document.getElementById("INT");
+			EDU = document.getElementById("EDU");
+			POW = document.getElementById("POW");
+			LUCK = document.getElementById("LUCK");
+			SAN = document.getElementById("SAN");
+			MP = document.getElementById("MP");
+			MP_max = document.getElementById("MP_max");
+			MOV = document.getElementById("MOV");
+			STR.value = dice3d6()*5;
+			CON.value = dice3d6()*5;
+			SIZ.value = dice2d6_plus_6()*5;
+			DEX.value = dice3d6()*5;
+			APP.value = dice3d6()*5;
+			INT.value = dice2d6_plus_6()*5;
+			EDU.value = dice2d6_plus_6()*5;
+			POW.value = dice3d6()*5;
+			LUCK.value = dice3d6()*5;
+			SAN.value = POW.value;
+			MP.value = Math.floor((POW.value/5));
+			MP_max.value = MP.value;
+			
+		}
+		function dice6(){
+			return Math.floor(Math.random()*6+1)
+		}
+		function dice3d6(){
+			return dice6()+dice6()+dice6()
+		}
+		function dice2d6_plus_6(){
+			return dice6()+dice6()+6
+		}
+	
+	</script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
