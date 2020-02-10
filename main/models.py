@@ -5,7 +5,7 @@ class Character(models.Model):
     account = models.CharField(max_length=10,default=10)
     password = models.CharField(max_length=10,default=10)
     Name = models.CharField(max_length=100,default=10) 
-    Sex = models.CharField(max_length=2,default=10)
+    Sex = models.CharField(max_length=10,default=10)
     Job = models.CharField(max_length=10,default=10)
     Age = models.PositiveIntegerField(default=10)
     Birth_Place = models.CharField(max_length=100,default=10)
