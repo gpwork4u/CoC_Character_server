@@ -11,12 +11,14 @@ def logout(request):
 
 def user_menu(request):
     login_flag = False
+    session_flag = False
     if 'username' in request.session:
         session_flag = True
         username = request.session['username']
     else:
-        username = Account.objects.get(username=request.POST['username'])
-        login_flag = username.password == request.POST['password']
+        username = request.POST['username']
+        user = Account.objects.get(username=request.POST['username'])
+        login_flag = user.password == request.POST['password']
     if login_flag or session_flag:
         request.session['username'] = username
         chars = Character.objects.filter(username=username)
