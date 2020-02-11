@@ -5,31 +5,37 @@ from random import randint
 
 
 # Create your views here.
-def show_characters(request):
-    user = Account.objects.get(username=request.POST['username'])
-    login_flag = user.password == request.POST['password']
-    if login_flag:
-        chars = Character.objects.filter(username=request.POST['username']).all()
-        print(chars)
-    return render(request,"user_characters.html",locals())
+def logout(request):
+    del request.session['username']
+    return redirect('/')
+
+def user_menu(request):
+    login_flag = False
+    if 'username' in request.session:
+        session_flag = True
+        username = request.session['username']
+    else:
+        username = Account.objects.get(username=request.POST['username'])
+        login_flag = username.password == request.POST['password']
+    if login_flag or session_flag:
+        request.session['username'] = username
+        chars = Character.objects.filter(username=username)
+    if 'submit' in request.POST:
+        if request.POST['submit'] == 'create':
+            create_character(request)
+        elif request.POST['submit'] == 'update':
+            update_character(request)
+    return render(request,"user_menu.html",locals())
 def show_character(request):
     char = Character.objects.get(id=request.POST['id'])
-    login_flag = char.username == request.POST['username']
+    login_flag = char.username == request.session['username']
     if login_flag:
         char = Character.objects.get(id=request.POST['id'])
     return render(request,"character.html",locals())
 
 def menu(request):
-    if not 'submit' in request.POST:
-        return render(request,"menu.html",locals())
-    if request.POST['submit'] == 'create':
-        create_character(request)
-        return redirect('/')
-    elif request.POST['submit'] == 'update':
-        update_character(request)
-        return redirect('/')
-    elif request.POST['submit'] == 'regist':
-        user_regist(request)
+    if 'username' in request.session:
+        return redirect('user_menu/')
     return render(request,"menu.html",locals())
 def update_character(request):
     char = Character.objects.filter(id=request.POST["id"]).first()
@@ -119,7 +125,7 @@ def update_character(request):
     char.Encounters_with_Strange_Entities=request.POST["Encounters_with_Strange_Entities"]
     char.save()
 def create_character(request):
-    Character.objects.create(username=request.POST["username"],\
+    Character.objects.create(username=request.session["username"],\
                          Name=request.POST["Name"],\
                          Sex=request.POST["Sex"],\
                          Job=request.POST["Job"],\
@@ -206,8 +212,7 @@ def create_character(request):
                          Encounters_with_Strange_Entities=request.POST["Encounters_with_Strange_Entities"])
 
 def show_create_page(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.session['username']
     return render(request,'create_char.html',locals())
 
 def show_regist_page(request):
@@ -225,7 +230,4 @@ def validate_username(request):
     data = {
         'is_taken': Account.objects.filter(username=username).exists()
     }
-    print(data['is_taken'])
-    if data['is_taken']:
-        data['error_message'] = 'A user with this username already exists.'
     return JsonResponse(data)

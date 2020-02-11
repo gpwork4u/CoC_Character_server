@@ -19,9 +19,10 @@ from main.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', menu),
-    path('user_characters/',show_characters),
-    path('character/',show_character),
-    path('create_character/',show_create_page),
+    path('user_menu/',user_menu),
+    path('user_menu/character/',show_character),
+    path('user_menu/create_character/',show_create_page),
     path('regist/',show_regist_page),
-    path('validate/',validate_username)
+    path('validate/',validate_username),
+    path('logout/',logout)
 ]

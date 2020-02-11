@@ -12,8 +12,8 @@
   </head>
   <body>
     <body>
-        {% if login_flag %}
-        <form action="/character/" method="POST">
+        {% if login_flag or session_flag%}
+        <form action="character/" method="POST">
             {% csrf_token %}
             <select id="id" name="id">
             {% for char in chars%}
@@ -24,12 +24,9 @@
             <input type="submit" value="choose">
         </form>
         <br>
-        <form action="/create_character/" method="POST">
-            {% csrf_token %}
-            <input type="hidden" id="username" name="username" value="{{ user.username }}">
-            <input type="hidden" id="password" name="password" value="{{ user.password }}">
-            <input type="submit" value="create new character">
-        </form>
+        <button onclick="location.href='create_character/'">create character</button>
+        <button onclick="location.href='/logout/'">logout</button>
+
         {% else %}
         <h1>還想偷用別人ㄉ帳號阿朱熹</h1>
         {% endif %}

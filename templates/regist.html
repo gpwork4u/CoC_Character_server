@@ -11,33 +11,35 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <body>
-        <form action="/" method="POST">
-            {% csrf_token %}
-            <table>
-                <tr>
-                    <td><label>username</label></td>
-                    <td>
-                        <input type="text" class="form-control" id="username" name="username">
-                    </td>
-                    <td><label id="warning_msg" style="color:crimson;"></label></td>
-                </tr>
-                <tr>
-                  <td><label>password</label></td>
-                  <td><input type="text"  class="form-control" id="password" name="password"></td>
-                  <td><label></label></td>
-                </tr>
-                <tr>
-                  <td><label>email</label></td>
-                  <td><input type="text" class="form-control" id="email" name="email"></td>
-                </tr>
-                <tr>
-                  <td><input type="submit" name="submit" id="submit" value="regist"></td>
-                  <td><label></label></td>
-                </tr>
-            </table>
-        </form>
-        
+    <div class="container">
+      <form action="/" method="POST">
+          {% csrf_token %}
+          <table class="table">
+              <tr>
+                  <td><label>username</label></td>
+                  <td>
+                      <input type="text" class="form-control" id="username" name="username">
+                  </td>
+                  <td><label id="warning_msg" style="color:crimson;visibility: hidden;">username has been registed.</label></td>
+              </tr>
+              <tr>
+                <td><label>password</label></td>
+                <td><input type="text"  class="form-control" id="password" name="password"></td>
+                <td></td>
+                <td><label></label></td>
+              </tr>
+              <tr>
+                <td><label>email</label></td>
+                <td><input type="text" class="form-control" id="email" name="email"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><input type="submit" name="submit" id="submit" value="regist"></td>
+                <td><label></label></td>
+              </tr>
+          </table>
+      </form>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         
@@ -53,10 +55,13 @@
           dataType: 'json',
           success: function (data) {
             if (data.is_taken) {
-              document.getElementById('warning_msg').textContent=data['error_message'];
+              $("#warning_msg").css("visibility","visible");
+              console.log("true");
             }
             else{
-              document.getElementById('warning_msg').textContent="";
+              $("#warning_msg").css("visibility","hidden");
+              console.log("f");
+
             }
           }
         });

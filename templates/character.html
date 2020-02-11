@@ -14,7 +14,7 @@
     <body>
         {% if login_flag %}
         <table>
-            <form action="/" method="POST"><table>
+            <form action="../" method="POST"><table>
                 {% csrf_token %}
                 <tr><td>Name</td><td><input type="text" name="Name" id="Name" value="{{ char.Name }}"></td><tr>
                 <tr><td>Sex</td><td><input type="text" name="Sex" id="Sex" value="{{ char.Sex }}"></td><tr>
@@ -100,12 +100,14 @@
                 <tr><td>Phobias_Manias</td><td><input type="text" name="Phobias_Manias" id="Phobias_Manias" value="{{ char.Phobias_Manias }}"></td><tr>
                 <tr><td>Arcane_Tome_Spell_Artifact</td><td><input type="text" name="Arcane_Tome_Spell_Artifact" id="Arcane_Tome_Spell_Artifact" value="{{ char.Arcane_Tome_Spell_Artifact }}"></td><tr>
                 <tr><td>Encounters_with_Strange_Entities</td><td><input type="text" name="Encounters_with_Strange_Entities" id="Encounters_with_Strange_Entities" value="{{ char.Encounters_with_Strange_Entities }}"></td><tr>
-            <tr><input type="submit" name="submit" id="submit "value="update"></tr>
+                <tr><input type="submit" name="submit" id="submit "value="update"></tr>
+                <input type="hidden" id="id" name="id" value="{{ char.id }}">
             </table>
             </form>
         </table>
         {% else %}
-        <h1>還想偷用別人ㄉ帳號阿朱熹</h1>
+        <h1>還想偷用別人ㄉ帳號阿朱熹</h1><br>
+        <button onclick="location.href='../'">ㄅ欠</button>
         {% endif %}
 
     <!-- Optional JavaScript -->
