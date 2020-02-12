@@ -38,6 +38,9 @@ def show_character(request):
 def menu(request):
     if 'username' in request.session:
         return redirect('user_menu/')
+    if 'submit' in request.POST:
+        if request.POST['submit']=='regist':
+            user_regist(request)
     return render(request,"menu.html",locals())
 def update_character(request):
     char = Character.objects.filter(id=request.POST["id"]).first()
